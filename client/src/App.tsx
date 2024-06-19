@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Card from './component/Card';
 import Skelton from './component/Skelton';
 
-let items = ['Search Lipstic', "Search Shoes", "Search Perfume", "Search Brand","Search Apple","Search Ice Cream"];
+let items = ['Lipstic', "Shoes", "Perfume", "Brand","Apple","Ice Cream","calvin klein"];
 
 const App = () => {
   const [query, setQuery] = useState<string>("");
@@ -24,7 +24,6 @@ const App = () => {
   }, [activeHolderIndex,holder]);
 
   const { data, loading, hasMore } = useScroll(query, pageNumber);
-  console.log(hasMore);
   const lastElement = useCallback((node: any) => {
     if (loading) return;
     //@ts-ignore
@@ -68,7 +67,7 @@ const App = () => {
 
       </div>
       <div className='bg-white  relative rounded-xl top-[-30px] sm:top-[-100px] w-[80%] mx-auto min-h-screen border '>
-        <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query}</h1>
+        <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query.length==0?"All":query}</h1>
         <div className='grid p-5  sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 place-items-center gap-2 '>
           {data.length>0 && data.map((item, idx) => {
             if (data.length - 1 == idx) {
@@ -80,7 +79,7 @@ const App = () => {
 
 
         </div>
-        {data.length==0 && !loading && <div className='text-center font-bold '>Empty</div>}
+        {data.length==0 && !loading && <div className='text-center font-bold '>No Result Found</div>}
         {loading && <Skelton />}
 
 
