@@ -1,10 +1,10 @@
-import  { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useScroll from './hooks/useScroll';
 import { motion } from "framer-motion"
 import Card from './component/Card';
 import Skelton from './component/Skelton';
 
-let items = ['Lipstic', "Shoes", "Perfume", "Brand","Apple","Ice Cream","calvin klein"];
+let items = ['Lipstic', "Shoes", "Perfume", "Brand", "Apple", "Ice Cream", "calvin klein"];
 
 const App = () => {
   const [query, setQuery] = useState<string>("");
@@ -15,13 +15,16 @@ const App = () => {
   const observer = useRef();
   const handleSetPlaceHolder = () => {
     setActiveHolderIndex((pre) => (pre + 1) % items.length);
-    setHolder(()=>items[activeHolderIndex]);
+    setHolder(() => items[activeHolderIndex]);
   }
   useEffect(() => {
     const intervalId = setInterval(handleSetPlaceHolder, 2000);
     return () => clearInterval(intervalId);
 
-  }, [activeHolderIndex,holder]);
+  }, [activeHolderIndex, holder]);
+  useEffect(() => {
+    setPageNumber(1);
+  }, [query])
 
   const { data, loading, hasMore } = useScroll(query, pageNumber);
   const lastElement = useCallback((node: any) => {
@@ -67,19 +70,19 @@ const App = () => {
 
       </div>
       <div className='bg-white  relative rounded-xl top-[-30px] sm:top-[-100px] w-[80%] mx-auto min-h-screen border '>
-        <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query.length==0?"All":query}</h1>
+        <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query.length == 0 ? "All" : query}</h1>
         <div className='grid p-5  sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 place-items-center gap-2 '>
-          {data.length>0 && data.map((item, idx) => {
+          {data.length > 0 && data.map((item, idx) => {
             if (data.length - 1 == idx) {
               return <Card key={idx} {...item} callback={lastElement} />
             }
             return <Card ref={null} key={idx} {...item} />
           })
-        }
+          }
 
 
         </div>
-        {data.length==0 && !loading && <div className='text-center font-bold '>No Result Found</div>}
+        {data.length == 0 && !loading && <div className='text-center font-bold '>No Result Found</div>}
         {loading && <Skelton />}
 
 
