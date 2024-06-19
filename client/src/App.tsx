@@ -72,7 +72,7 @@ const App = () => {
       <div className='bg-white  relative rounded-xl top-[-30px] sm:top-[-100px] w-[80%] mx-auto min-h-screen border '>
         <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query.length == 0 ? "All" : query}</h1>
         <div className='grid p-5  sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 place-items-center gap-2 '>
-          {data.length > 0 && data.map((item, idx) => {
+          {data && data.length > 0 && data.map((item, idx) => {
             if (data.length - 1 == idx) {
               return <Card key={idx} {...item} callback={lastElement} />
             }
@@ -82,7 +82,8 @@ const App = () => {
 
 
         </div>
-        {data.length == 0 && !loading && <div className='text-center font-bold '>No Result Found</div>}
+        {data==null &&  <Skelton/>}
+        {data && data.length===0 && <p className='text-center font-bold'>No Resume Found</p>}
         {loading && <Skelton />}
 
 

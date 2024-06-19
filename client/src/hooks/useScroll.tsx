@@ -9,7 +9,7 @@ let productPerPage = 12;
 const useScroll = (query: string, pageNumber: number) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [hasMore, setHasMore] = useState<boolean>(true);
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<any[] | null>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -21,6 +21,7 @@ const useScroll = (query: string, pageNumber: number) => {
             const count = res.data?.dataCount;
             setHasMore((pageNumber * productPerPage) + productPerPage < count);
             setData((pre) => {
+                if (pre === null) return [...res.data.data];
                 return [...pre, ...res.data.data];
             });
             setLoading(false);
@@ -35,7 +36,7 @@ const useScroll = (query: string, pageNumber: number) => {
 
     }, [query, pageNumber]);
     useEffect(() => {
-        setData([]);
+        setData(null);
     }, [query])
 
     return (
