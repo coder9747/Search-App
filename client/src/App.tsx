@@ -63,15 +63,18 @@ const App = () => {
             initial={{ scale: .8 }}
             animate={{ scale: [1.1, 1] }}
             transition={{ delay: 1 }}
-            className='bg-green-500 h-7 p-1 sm:h-10 w-16 sm:text-xl text-[12px]  sm:w-32 rounded-xl'>Search
+            whileInView={{
+              scale: [0.8]
+            }}
+            className='bg-green-500  p-1 sm:h-10 w-16 sm:text-xl text-white sm:text-black text-[9px]  sm:w-32 rounded'>Search
           </motion.button>
         </motion.div>
 
 
       </div>
-      <div className='bg-white  relative rounded-xl top-[-30px] sm:top-[-100px] w-[80%] mx-auto min-h-screen border '>
+      <div className='bg-white  mb-[200px] relative rounded-xl   sm:top-[-100px] sm:w-[80%] mx-auto min-h-screen border '>
         <h1 className='text-center my-2 font-bold text-xl text-slate-600'>Search For {query.length == 0 ? "All" : query}</h1>
-        <div className='grid p-5  sm:grid-cols-2 grid-cols-1 xl:grid-cols-3 place-items-center gap-2 '>
+        <div className='grid sm:p-5 p-1   grid-cols-2 xl:grid-cols-3 place-items-center sm:gap-2 '>
           {data && data.length > 0 && data.map((item, idx) => {
             if (data.length - 1 == idx) {
               return <Card key={idx} {...item} callback={lastElement} />
@@ -82,9 +85,10 @@ const App = () => {
 
 
         </div>
-        {data==null &&  <Skelton/>}
-        {data && data.length===0 && <p className='text-center font-bold'>No Resume Found</p>}
+        {data == null && <Skelton />}
+        {data && data.length === 0 && <p className='text-center font-bold'>No Resume Found</p>}
         {loading && <Skelton />}
+
 
 
 
